@@ -35,7 +35,6 @@ function New-WorkerPool {
     }
 
     # Create the thread pool
-
     $env:WhereAmI = Get-Location 
     for ($i=0; $i -le $WorkerCount; $i++){
         Start-Job -ScriptBlock $ScriptBlock -InitializationScript { Import-Module "$env:WhereAmI\New-WorkerPool.psm1" }
