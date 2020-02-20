@@ -36,12 +36,10 @@ function New-WorkerPool {
 
     # Create the thread pool
 
-    Start-Job -ScriptBlock $ScriptBlock
-
-    While($false){
-        $test = Receive-Job -Id 1        
+    $env:WhereAmI = Get-Location 
+    for ($i=0; $i -le $WorkerCount; $i++){
+        Start-Job -ScriptBlock $ScriptBlock -InitializationScript { Import-Module "$env:WhereAmI\New-WorkerPool.psm1" }
     }
-
 }
 
 function DoSomeWork {
