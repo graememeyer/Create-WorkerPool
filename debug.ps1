@@ -14,10 +14,10 @@ New-WorkerPool {DoSomeWork}
 # Write-Host ""
 
 
-$RemainingJobs = Get-Job | where State -eq "Running"
+$RemainingJobs = Get-Job | Where-Object State -eq "Running"
 While($RemainingJobs){
+    $RemainingJobs = Get-Job | Where-Object State -eq "Running"
     Clear-Host
-    Get-Job
-    $RemainingJobs = Get-Job | where State -eq "Running"
+    $RemainingJobs
     Start-Sleep -milliseconds 600
 }
