@@ -34,11 +34,28 @@ function New-WorkerPool {
         $WorkerCount = $DefaultWorkerCount
     }
 
+    Write-Host "Starting jobs..."
     # Create the thread pool
     $env:WhereAmI = Get-Location 
     for ($i=1; $i -le $WorkerCount; $i++){
         Start-Job -ScriptBlock $ScriptBlock -InitializationScript { Import-Module "$env:WhereAmI\New-WorkerPool.psm1" }
     }
+    Write-Host "$($WorkerCount) jobs started..."
+    
+    $Jobs = Get-Job
+    $TotalJobsCount = $Jobs.count
+    $RunningJobsCount = $TotalJobsCount
+
+    While($RunningJobsCount -gt 0){
+        $RunningJobs = $Jobs | Where-Object State -ne "Completed"
+        $RunningJobsCount = $RunningJobs.count
+        $RemainingJobsCount = $TotalJobsCount - $RunningJobsCount
+        $PercentOfJobsComplete =  $RemainingJobsCount / $TotalJobsCount * 100
+        Write-Progress -Activity "Jobs in progress" -Status "$($PercentOfJobsComplete)% Complete:" -PercentComplete $PercentOfJobsComplete;
+        Start-Sleep -Milliseconds 600
+    }
+
+    "All jobs complete."
 }
 
 function DoSomeWork {
