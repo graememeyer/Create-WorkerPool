@@ -14,10 +14,17 @@ New-WorkerPool {DoSomeWork}
 # Write-Host ""
 
 
-$RemainingJobs = Get-Job | Where-Object State -eq "Running"
-While($RemainingJobs){
-    $RemainingJobs = Get-Job | Where-Object State -eq "Running"
-    Clear-Host
-    $RemainingJobs
-    Start-Sleep -milliseconds 600
+$Jobs = Get-Job
+$TotalJobsCount = $Jobs.count
+$RunningJobsCount = $TotalJobsCount
+
+While($RunningJobsCount -gt 0){
+    $RunningJobs = $Jobs | Where-Object State -ne "Completed"
+    $RunningJobsCount = $RunningJobs.count
+    $RemainingJobsCount = $TotalJobsCount - $RunningJobsCount
+    $PercentOfJobsComplete =  $RemainingJobsCount / $TotalJobsCount * 100
+    Write-Progress -Activity "Jobs in progress" -Status "$($PercentOfJobsComplete)% Complete:" -PercentComplete $PercentOfJobsComplete;
+    Start-Sleep -Milliseconds 600
 }
+
+"All jobs complete."
