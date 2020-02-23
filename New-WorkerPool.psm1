@@ -8,9 +8,9 @@
 .NOTES
     File Name : New-WorkerPool.psm1
     Author    : Graeme Meyer (@graememeyer)
-    Version   : 0.1
+    Version   : 0.5
 .LINK
-    https://github.com/graememeyer/
+    https://github.com/graememeyer/New-WorkerPool
 #>
 
 [int] $DefaultWorkerCount = 5
