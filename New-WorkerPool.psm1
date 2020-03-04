@@ -63,7 +63,7 @@ function DoSomeWork {
     Write-Host "Starting some work."
     $Total=0
     for($i; $i-le 5;$i++){
-        $SleepAmount = Get-Random -Minimum -0 -Maximum 5000
+        $SleepAmount = Get-Random -Minimum -0 -Maximum 1000
         Start-Sleep -Milliseconds $SleepAmount
         $Total = $Total + $SleepAmount
     }
