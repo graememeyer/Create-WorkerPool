@@ -21,6 +21,7 @@ Write-Host "Complete. Press the enter key to exit."
 Read-Host # Hold the new window open after the process is complete.
 #>
 
+# Press any key to exit, rather than having to press enter like with Read-Host.
 # Doesn't work in ISE apparently. 
 Write-Host -NoNewLine 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
