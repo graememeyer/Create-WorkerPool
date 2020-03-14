@@ -58,7 +58,7 @@ function New-WorkerPool {
     "All jobs complete."
 }
 
-function DoSomeWork {
+function DemoSleepFunction {
     # Do some work
     Write-Host "Starting some work."
     $Total=0
